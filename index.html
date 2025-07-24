@@ -13,6 +13,9 @@ title: Giri's Blog
       <a href="{{ post.url | relative_url }}" class="read-more">Read more &raquo;</a>
     </div>
   </article>
+  {% unless forloop.last %}
+    <div class="post-separator"></div> {% comment %} This is the new separator div {% endcomment %}
+  {% endunless %}
   {% endfor %}
 </div>
 

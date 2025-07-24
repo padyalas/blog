@@ -1,0 +1,46 @@
+---
+---
+
+@import "{{ site.theme }}"; /* This line imports all the default Cayman theme styles */
+
+/* Your custom CSS overrides go below this line */
+
+// --- For the code block color issue ---
+.highlight pre,
+.highlight code {
+  color: #333333; /* A dark grey for general code text */
+}
+
+.highlight .na, /* Name attribute */
+.highlight .no, /* Other name */
+.highlight .x {  /* Unknown/Other */
+  color: #333333; /* Make these dark too if they were red */
+}
+
+// --- For the line between posts ---
+.post-separator {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee; /* A light grey horizontal line */
+  width: 80%; /* Optional: make the line shorter */
+  margin-left: auto; /* Center the line */
+  margin-right: auto; /* Center the line */
+}
+
+/* Optional: Adjust for smaller screens */
+@media (max-width: 768px) {
+  .post-separator {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee; /* Keep or remove border on mobile as desired */
+    width: 90%;
+  }
+}
+
+// If you just want empty space without a line:
+/*
+.post-separator {
+  height: 2rem;
+  clear: both;
+}
+*/

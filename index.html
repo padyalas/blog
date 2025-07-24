@@ -1,65 +1,43 @@
 ---
 layout: default
+title: Giri's Blog
 ---
 
-<!-- banner -->
-{% if site.data.homepage.banner.enable %}
-<section class="banner bg-cover"
-  style="background-image: url('{{ site.data.homepage.banner.bg_image | relative_url }}');">
-  <img src="{{ site.data.homepage.banner.image | relative_url }}" class="img-fluid illustration" alt="">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 mb-5 mb-lg-0">
-        <h1>{{ site.data.homepage.banner.title }}</h1>
-      </div>
-      <div class="col-lg-6 illustration-mobile">
-        <img src="{{ site.data.homepage.banner.image | relative_url }}" class="img-fluid" alt="">
-      </div>
+<div class="posts">
+  {% for post in paginator.posts %}
+  <article class="post-item">
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+    <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
+    <div class="post-excerpt">
+      {{ post.excerpt | strip_html | truncatewords: 50 }}
+      <a href="{{ post.url | relative_url }}" class="read-more">Read more &raquo;</a>
     </div>
-  </div>
-</section>
-{% endif %}
-<!-- /banner -->
+  </article>
+  {% endfor %}
+</div>
 
-<!-- blog -->
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto px-0">
-        <div class="bg-white shadow block">
-          {% for post in paginator.posts %}
-          {% include post.html %}
-          {% endfor %}
-          <!-- pagination -->
-          {% include pagination.html %}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /blog -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}" class="previous">« Prev</a>
+  {% else %}
+    <span class="previous disabled">« Prev</span>
+  {% endif %}
 
-<!-- call_to_action -->
-{% if site.data.homepage.call_to_action.enable %}
-<section class="section pt-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <div class="row shadow bg-white p-5">
-          <div class="col-md-4 text-center text-md-left mb-4 mb-lg-0">
-            <img src="{{ site.data.homepage.call_to_action.image | relative_url }}" class="mr-4 img-fluid rounded" alt=""></div>
-          <div class="col-md-8 text-center text-md-left">
-            <h3 class="mt-0">{{ site.data.homepage.call_to_action.title }}</h3>
-            <p>{{ site.data.homepage.call_to_action.description }}</p>
-            {% if site.data.homepage.call_to_action.button.enable %}
-            <a href="{{ site.data.homepage.call_to_action.button.link | relative_url }}"
-              class="btn btn-primary">{{ site.data.homepage.call_to_action.button.label }}</a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <span class="page-number current">{{ page }}</span>
+    {% elsif page == 1 %}
+      <a href="{{ '/blog/' | relative_url }}" class="page-number">{{ page }}</a> {# Adjust '/blog/' if your index is at root #}
+    {% else %}
+      <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}" class="page-number">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}" class="next">Next »</a>
+  {% else %}
+    <span class="next disabled">Next »</span>
+  {% endif %}
+</div>
 {% endif %}
-<!-- /call_to_action -->
